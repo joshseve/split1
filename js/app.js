@@ -2,7 +2,7 @@ var estudiantes = [];
 
 function obtenerListaEstudiantes() {
     // TO DO: Retornar la lista de estudiantes
-
+      return estudiantes;
 }
 
 function agregarEstudiante() {
@@ -10,28 +10,18 @@ function agregarEstudiante() {
     // Hint: El estudiante debe ser agregado a la lista de estudiantes
     // TO DO: Retornar el estudiante recientemente creado
 
-    var preguntas = ["Escribe el primer nombre y el primer apellido del alumno: ",
-                     "¿Cuál fue su puntaje tecnico?",
-                     "¿Cuál fue su puntaje HSE?"];
-    var ordenaPreguntas = preguntas.length;
-    var respuestasDelUsuario = [];
-
-    var mostrarPreguntas = function(){
-    for(var indice = 0; indice < ordenaPreguntas; indice++){
-     var guardandoRespuestas = prompt(preguntas[indice]);
-     respuestasDelUsuario.push(guardandoRespuestas);
-      }
-    }
-    mostrarPreguntas();
-
-    return (respuestasDelUsuario);
-
+    var nombreEstudiante = prompt ("Ingresa nombre y apellido del estudiante:");
+    var puntosTecnicos = prompt ("¿Cuántos puntos tecnicos obtuvo el estudiante?");
+    var puntosHSE = prompt ("¿Cuántos puntos HSE obtuvo el estudiante?");
+// Esto es un objeto literal
+    var estudiante = {
+      nombre : nombreEstudiante,
+      pTecnicos : puntosTecnicos,
+      pHse : puntosHSE
+    };
+    estudiantes.push(estudiante);
+    return estudiante;
 }
-
-// Me lleve demasiado tiempo en llegar a este punto, lo intente de muchas maneras,
-// hasta que ya puedo ingresar a un alumno, pero sus datos me salen repetidos y juntos,
-// quise revisar lo demás para ver si podia avanzar en otro punto, y ya no lo logré!!! :(
-
 
 function mostrar(estudiante) {
     // TO DO: Completar el template para que muestre las propiedades correctas del estudiante
@@ -40,9 +30,9 @@ function mostrar(estudiante) {
     resultado += "<div class='col m12'>";
     resultado += "<div class='card blue-grey darken-1'>";
     resultado += "<div class='card-content white-text'>";
-    resultado += "<p><strong>Nombre:</strong> " + estudiante + "</p>";
-    resultado += "<p><strong>Puntos Técnicos:</strong> " + estudiante + "</p>";
-    resultado += "<p><strong>Puntos HSE:</strong> " + estudiante + "</p>";
+    resultado += "<p><strong>Nombre:</strong> " + estudiante.nombre + "</p>";
+    resultado += "<p><strong>Puntos Técnicos:</strong> " + estudiante.pTecnicos + "</p>";
+    resultado += "<p><strong>Puntos HSE:</strong> " + estudiante.pHse + "</p>";
     resultado += "</div>";
     resultado += "</div>";
     resultado += "</div>";
@@ -54,6 +44,17 @@ function mostrarLista(estudiantes) {
     // TO DO: Iterar la lista del estudiantes para devolverlos en el formato que usa la función mostrar(estudiante)
     // Retornar el template de todos los estudiantes
 
+    // var queMostrar = "";
+    //   estudiantes.forEach (function (estudiante)
+    //   queMostrar += queMostrar(estudiante);
+    // });
+    // return queMostrar;
+
+    var queMostrar = "";
+      for(var i=0; i < estudiantes.length; i++){
+        queMostrar += mostrar(estudiantes[i]);
+      }
+      return queMostrar;
 }
 
 function buscar(nombre, estudiantes) {
@@ -61,15 +62,26 @@ function buscar(nombre, estudiantes) {
     // Retornar el objeto del estudiante buscado
     // Nota: NO IMPORTA SI EL USUARIO ESCRIBE EL NOMBRE EN MAYÚSCULAS O MINÚSCULAS
 
+    var queBuscar = estudiantes.filter (function (estudiante) {
+          return estudiante.nombre.toLowerCase() === nombre.toLocaleLowerCase();
+        });
+        return queBuscar;
 }
 
 function topTecnico(estudiantes) {
     // TO DO: Retornar el arreglo de estudiantes ordenado por puntaje técnico de mayor a menor
 
-
+    var elMayorTec = estudiantes.sort (function (a,b){
+        return b.pTecnicos - a.pTecnicos
+    });
+    return elMayorTec;
 }
 
 function topHSE(estudiantes) {
     // TO DO: Retornar el arreglo de estudiantes ordenado por puntaje de HSE de mayor a menor
 
+    var elMayorHSE = estudiantes.sort (function (a,b){
+        return b.pHse - a.pHse
+    });
+    return elMayorHSE;
 }
